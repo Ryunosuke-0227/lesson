@@ -13,6 +13,24 @@ const Peer = window.Peer;
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
 
+  const toggleCamera = document.getElementById('js-toggle-camera');
+  const toggleMicrophone = document.getElementById('js-toggle-microphone');
+  const cameraStatus = document.getElementById('camera-status');
+  const microphoneStatus = document.getElementById('microphone-status');
+  
+  toggleCamera.addEventListener('click', () => {
+    const videoTracks = localStream.getVideoTracks()[0];
+    videoTracks.enabled = !videoTracks.enabled;
+    cameraStatus.textContent = `カメラ${videoTracks.enabled ? 'ON' : 'OFF'}`;
+  });
+  
+  toggleMicrophone.addEventListener('click', () => {
+    const audioTracks = localStream.getAudioTracks()[0];
+    audioTracks.enabled = !audioTracks.enabled;
+    microphoneStatus.textContent = `マイク${audioTracks.enabled ? 'ON' : 'OFF'}`;
+  });
+
+
   meta.innerText = `
     UA: ${navigator.userAgent}
     SDK: ${sdkSrc ? sdkSrc.src : 'unknown'}
